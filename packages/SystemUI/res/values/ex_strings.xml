@@ -216,5 +216,7 @@
     <string name="task_helper_app_killed">%1$s hart beendet</string>
     <string name="empty_app_killed">App</string>
 
+    <!-- VPN -->
+    <string name="status_bar_vpn">VPN</string>
 </resources>
 
