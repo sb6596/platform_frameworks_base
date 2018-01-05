@@ -204,7 +204,8 @@ public interface StatusBarGoogleModule {
             Lazy<NotificationShadeDepthController> notificationShadeDepthController,
             DismissCallbackRegistry dismissCallbackRegistry,
             StatusBarTouchableRegionManager statusBarTouchableRegionManager,
-            TaskHelper taskHelper) {
+            TaskHelper taskHelper,
+            FlashlightController flashlightController) {
         return new StatusBarGoogle(
                 smartSpaceController,
                 wallpaperNotifier,
@@ -285,6 +286,7 @@ public interface StatusBarGoogleModule {
                 dismissCallbackRegistry,
                 notificationShadeDepthController,
                 statusBarTouchableRegionManager,
-                taskHelper);
+                taskHelper,
+                flashlightController);
     }
 }

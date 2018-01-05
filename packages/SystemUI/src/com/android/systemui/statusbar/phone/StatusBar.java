@@ -795,7 +795,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             DismissCallbackRegistry dismissCallbackRegistry,
             Lazy<NotificationShadeDepthController> notificationShadeDepthControllerLazy,
             StatusBarTouchableRegionManager statusBarTouchableRegionManager,
-            TaskHelper taskHelper) {
+            TaskHelper taskHelper,
+            FlashlightController flashlightController) {
          super(context);
         mNotificationsController = notificationsController;
         mLightBarController = lightBarController;
@@ -873,6 +874,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mIconPolicy = phoneStatusBarPolicy;
         mDismissCallbackRegistry = dismissCallbackRegistry;
         mTaskHelper = taskHelper;
+        mFlashlightController = flashlightController;
 
         mBubbleExpandListener =
                 (isExpanding, key) -> {
@@ -1340,9 +1342,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
-
-
-        mFlashlightController = Dependency.get(FlashlightController.class);
 
         mMinBrightness = mPowerManager.getMinimumScreenBrightnessSetting();
         mMaxBrightness = mPowerManager.getMaximumScreenBrightnessSetting();
@@ -2226,9 +2225,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (DEBUG) {
             Log.d(TAG, "Toggling camera flashlight");
         }
-        if (mFlashlightController.isAvailable()) {
-            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+        if (!isScreenFullyOff() && mDeviceInteractive && !isPulsing() && !mDozing) {
+            toggleFlashlight();
+            return;
         }
+        mDozeServiceHost.toggleFlashlightProximityCheck();
     }
 
 
@@ -2237,9 +2238,18 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (DEBUG) {
             Log.d(TAG, "Disabling camera flashlight");
         }
+        if (!isScreenFullyOff() && mDeviceInteractive && !isPulsing() && !mDozing) {
+            toggleFlashlight();
+            return;
+        }
+        mDozeServiceHost.toggleFlashlightProximityCheck();
+    }
+
+    public void toggleFlashlight() {
         if (mFlashlightController != null) {
+            mFlashlightController.initFlashLight();
             if (mFlashlightController.hasFlashlight() && mFlashlightController.isAvailable()) {
-                mFlashlightController.setFlashlight(enable);
+                mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
             }
         }
     }
@@ -2826,10 +2836,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         pw.println("SharedPreferences:");
         for (Map.Entry<String, ?> entry : Prefs.getAll(mContext).entrySet()) {
             pw.print("  "); pw.print(entry.getKey()); pw.print("="); pw.println(entry.getValue());
-        }
-
-        if (mFlashlightController != null) {
-            mFlashlightController.dump(fd, pw, args);
         }
     }
 
