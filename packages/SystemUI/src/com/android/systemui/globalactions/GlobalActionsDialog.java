@@ -955,10 +955,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public boolean onLongPress() {
-            if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+            /*if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+                mDialog.dismiss();
                 mWindowManagerFuncs.reboot(true);
                 return true;
-            }
+            }*/
             return false;
         }
 
@@ -1068,6 +1069,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         @Override
         public boolean onLongPress() {
             if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+                mDialog.dismiss();
                 mWindowManagerFuncs.reboot(true);
                 return true;
             }
@@ -1524,11 +1526,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         public boolean onLongClickItem(int position) {
             final Action action = mAdapter.getItem(position);
             if (action instanceof LongPressAction) {
-                if (mDialog != null) {
-                    mDialog.dismiss();
-                } else {
-                    Log.w(TAG, "Action long-clicked while mDialog is null.");
-                }
+                //mDialog.dismiss();
                 return ((LongPressAction) action).onLongPress();
             }
             return false;
@@ -2045,7 +2043,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public boolean onLongPress() {
-            return true;
+            // pass to onClick listener (onPress action)
+            return false;
         }
 
         @Override
@@ -2140,6 +2139,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         }
 
         public boolean showBeforeProvisioning() {
+            return false;
+        }
+
+        public boolean onLongPress() {
             return false;
         }
     }
