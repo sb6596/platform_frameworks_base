@@ -8758,6 +8758,24 @@ public final class Settings {
         public static final String LOCKDOWN_IN_POWER_MENU = "lockdown_in_power_menu";
 
         /**
+         * Whether the Reboot button should be shown in the power menu.
+         * @hide
+         */
+        public static final String REBOOT_IN_POWER_MENU = "reboot_in_power_menu";
+
+        /**
+         * Whether the Advanced reboot button should be shown in the power menu.
+         * @hide
+         */
+        public static final String ADVANCED_REBOOT_IN_POWER_MENU = "advanced_reboot_in_power_menu";
+
+        /**
+         * Whether the Screenshot button should be shown in the power menu.
+         * @hide
+         */
+        public static final String SCREENSHOT_IN_POWER_MENU = "screenshot_in_power_menu";
+
+        /**
          * Backup manager behavioral parameters.
          * This is encoded as a key=value list, separated by commas. Ex:
          *
