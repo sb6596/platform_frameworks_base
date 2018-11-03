@@ -671,9 +671,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             }
             if (GLOBAL_ACTION_KEY_POWER.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, shutdownAction);
-            } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
+            /*} else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, mAirplaneModeOn);
-            /*} else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
+            } else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
                 if (shouldDisplayBugReport(currentUser.get())) {
                     addIfShouldShowAction(tempActions, new BugReportAction());
                 }
@@ -696,13 +696,19 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, getAssistAction());*/
             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
-                addIfShouldShowAction(tempActions, restartAction);
-                // if Restart action is available, add advanced restart actions too
-                addIfShouldShowAction(tempActions, restartBootloaderAction);
-                addIfShouldShowAction(tempActions, restartRecoveryAction);
-                addIfShouldShowAction(tempActions, restartSystemUiAction);
+                if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                            Settings.Secure.REBOOT_IN_POWER_MENU, 1, getCurrentUser().id) != 0) {
+                    addIfShouldShowAction(tempActions, restartAction);
+                    // if Restart action is available, add advanced restart actions too
+                    addIfShouldShowAction(tempActions, restartBootloaderAction);
+                    addIfShouldShowAction(tempActions, restartRecoveryAction);
+                    addIfShouldShowAction(tempActions, restartSystemUiAction);
+                }
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
-                addIfShouldShowAction(tempActions, new ScreenshotAction());
+                if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                            Settings.Secure.SCREENSHOT_IN_POWER_MENU, 1, getCurrentUser().id) != 0) {
+                    addIfShouldShowAction(tempActions, new ScreenshotAction());
+                }
             /*} else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
                 if (mDevicePolicyManager.isLogoutEnabled()
                         && currentUser.get() != null
