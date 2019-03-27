@@ -35,6 +35,7 @@ import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.os.Message;
@@ -93,6 +94,8 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private boolean mTrafficVisible = false;
     private boolean mSystemIconVisible = true;
     private boolean mScreenOn = true;
+
+    private boolean mTrafficInHeaderView;
 
     private Handler mTrafficHandler = new Handler() {
         @Override
@@ -205,6 +208,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_ARROW), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION), false,
+                    this, UserHandle.USER_ALL);
         }
 
         /*
@@ -299,6 +305,10 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private void updateSettings() {
         updateTextSize();
         updateVisibility();
+        final ContentResolver resolver = getContext().getContentResolver();
+        mTrafficInHeaderView = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION, 0,
+                UserHandle.USER_CURRENT) == 1;
         if (mIsEnabled) {
             if (mAttached) {
                 totalRxBytes = TrafficStats.getTotalRxBytes();
@@ -326,6 +336,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         mShowArrow = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_ARROW, 1,
 	        UserHandle.USER_CURRENT) == 1;
+        mTrafficInHeaderView = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION, 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     private void clearHandlerCallbacks() {
@@ -422,7 +435,7 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     }
 
     private void updateVisibility() {
-        if (mIsEnabled && mTrafficVisible && mSystemIconVisible) {
+        if (mIsEnabled && mTrafficVisible && mSystemIconVisible && mTrafficInHeaderView) {
             setVisibility(View.VISIBLE);
         } else {
             setText("");
