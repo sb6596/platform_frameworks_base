@@ -71,7 +71,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private static final int MB = KB * KB;
     private static final int GB = MB * KB;
     private static final String symbol = "B/s";
-    private int mNetTrafSize = 21;
 
     private static DecimalFormat decimalFormat = new DecimalFormat("##0.#");
     static {
@@ -89,6 +88,7 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private int mTrafficType;
     private boolean mShowArrow;
     private int mAutoHideThreshold;
+    private int mNetTrafSize;
     private int mTintColor;
     private int mVisibleState = -1;
     private boolean mTrafficVisible = false;
@@ -211,6 +211,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_FONT_SIZE), false,
+                    this, UserHandle.USER_ALL);
         }
 
         /*
@@ -243,6 +246,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     public NetworkTraffic(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
+        txtSize = (mTrafficType == BOTH)
+                    ? resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size)
+                    : mNetTrafSize;
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         mTintColor = getCurrentTextColor();
         Handler mHandler = new Handler();
@@ -339,6 +345,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         mTrafficInHeaderView = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mNetTrafSize = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 21,
+                UserHandle.USER_CURRENT);
     }
 
     private void clearHandlerCallbacks() {
@@ -372,11 +381,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     }
 
     private void updateTextSize() {
-        int txtSize;
-
-        mNetTrafSize = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 21);
-
         if (mTrafficType == BOTH) {
             txtSize = getResources().getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
         } else {
@@ -387,9 +391,14 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
 
     public void onDensityOrFontScaleChanged() {
         final Resources resources = getResources();
+        txtSize = (mTrafficType == BOTH)
+                    ? resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size)
+                    : mNetTrafSize;
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
         setCompoundDrawablePadding(txtImgPadding);
-	    updateTextSize();
+        setGravity(Gravity.RIGHT);
+        updateTextSize();
     }
 
     @Override
