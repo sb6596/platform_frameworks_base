@@ -174,15 +174,15 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     @VisibleForTesting
     static final String GLOBAL_ACTION_KEY_POWER = "power";
     private static final String GLOBAL_ACTION_KEY_AIRPLANE = "airplane";
-    static final String GLOBAL_ACTION_KEY_BUGREPORT = "bugreport";
-    private static final String GLOBAL_ACTION_KEY_SILENT = "silent";
-    private static final String GLOBAL_ACTION_KEY_USERS = "users";
-    private static final String GLOBAL_ACTION_KEY_SETTINGS = "settings";
-    static final String GLOBAL_ACTION_KEY_LOCKDOWN = "lockdown";
-    private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
-    private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
+    //static final String GLOBAL_ACTION_KEY_BUGREPORT = "bugreport";
+    //private static final String GLOBAL_ACTION_KEY_SILENT = "silent";
+    //private static final String GLOBAL_ACTION_KEY_USERS = "users";
+    //private static final String GLOBAL_ACTION_KEY_SETTINGS = "settings";
+    //static final String GLOBAL_ACTION_KEY_LOCKDOWN = "lockdown";
+    //private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
+    //private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
     static final String GLOBAL_ACTION_KEY_RESTART = "restart";
-    private static final String GLOBAL_ACTION_KEY_LOGOUT = "logout";
+    //private static final String GLOBAL_ACTION_KEY_LOGOUT = "logout";
     static final String GLOBAL_ACTION_KEY_EMERGENCY = "emergency";
     static final String GLOBAL_ACTION_KEY_SCREENSHOT = "screenshot";
     static final String GLOBAL_ACTION_KEY_RESTART_RECOVERY = "recovery";
@@ -673,7 +673,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 addIfShouldShowAction(tempActions, shutdownAction);
             } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, mAirplaneModeOn);
-            } else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
+            /*} else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
                 if (shouldDisplayBugReport(currentUser.get())) {
                     addIfShouldShowAction(tempActions, new BugReportAction());
                 }
@@ -694,7 +694,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_VOICEASSIST.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, getVoiceAssistAction());
             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
-                addIfShouldShowAction(tempActions, getAssistAction());
+                addIfShouldShowAction(tempActions, getAssistAction());*/
             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, restartAction);
                 // if Restart action is available, add advanced restart actions too
@@ -703,12 +703,12 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 addIfShouldShowAction(tempActions, restartSystemUiAction);
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, new ScreenshotAction());
-            } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
+            /*} else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
                 if (mDevicePolicyManager.isLogoutEnabled()
                         && currentUser.get() != null
                         && currentUser.get().id != UserHandle.USER_SYSTEM) {
                     addIfShouldShowAction(tempActions, new LogoutAction());
-                }
+                }*/
             } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, new EmergencyDialerAction());
             } else {
