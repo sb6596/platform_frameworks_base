@@ -106,4 +106,8 @@ public class ThemesUtils {
             "com.android.theme.font.titilliumweb",
             "com.android.theme.font.ubuntu",
     };
+
+    public static final String[] SOLARIZED_DARK = {
+            "com.android.system.theme.solarizeddark",
+    };
 }
