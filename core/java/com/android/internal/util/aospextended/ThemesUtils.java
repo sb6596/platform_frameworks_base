@@ -52,4 +52,34 @@ public class ThemesUtils {
             "com.android.theme.color.yellow", // Yellow
 
     };
+
+    public static final String[] FONTS = {
+            "com.android.theme.font.aclonicasource",
+            "com.android.theme.font.adamgcinora",
+            "com.android.theme.font.amarantesource",
+            "com.android.theme.font.arbutussource",
+            "com.android.theme.font.arvolato",
+            "com.android.theme.font.bariolsource",
+            "com.android.theme.font.bignoodle",
+            "com.android.theme.font.bikohanken",
+            "com.android.theme.font.cagliostrosource",
+            "com.android.theme.font.comfortaa",
+            "com.android.theme.font.comicsans",
+            "com.android.theme.font.coolstorysource",
+            "com.android.theme.font.firasans",
+            "com.android.theme.font.googlesans",
+            "com.android.theme.font.lgsmartgothicsource",
+            "com.android.theme.font.mittelschrift",
+            "com.android.theme.font.oneplusslate",
+            "com.android.theme.font.pissel",
+            "com.android.theme.font.reemkufi",
+            "com.android.theme.font.roboto",
+            "com.android.theme.font.rosemarysource",
+            "com.android.theme.font.rubikrubik",
+            "com.android.theme.font.samsungone",
+            "com.android.theme.font.sonysketchsource",
+            "com.android.theme.font.surfersource",
+            "com.android.theme.font.titilliumweb",
+            "com.android.theme.font.ubuntu",
+    };
 }
