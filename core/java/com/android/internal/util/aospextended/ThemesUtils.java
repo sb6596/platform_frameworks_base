@@ -53,6 +53,30 @@ public class ThemesUtils {
 
     };
 
+    public static final String[] ADAPTIVE_ICON_SHAPE = {
+            "com.android.theme.icon.cloudy",
+            "com.android.theme.icon.cylindrical",
+            "com.android.theme.icon.heart",
+            "com.android.theme.icon.pebble",
+            "com.android.theme.icon.roundedhexagon",
+            "com.android.theme.icon.roundedrect",
+            "com.android.theme.icon.square",
+            "com.android.theme.icon.squircle",
+            "com.android.theme.icon.stretched",
+            "com.android.theme.icon.taperedrect",
+            "com.android.theme.icon.teardrop",
+            "com.android.theme.icon.vessel",
+    };
+
+    public static final String[] STATUSBAR_ICONS = {
+            "com.android.theme.icon_pack.circular.android",
+            "com.android.theme.icon_pack.filled.android",
+            "com.android.theme.icon_pack.kai.android",
+            "com.android.theme.icon_pack.rounded.android",
+            "com.android.theme.icon_pack.sam.android",
+            "com.android.theme.icon_pack.victor.android",
+    };
+
     public static final String[] FONTS = {
             "com.android.theme.font.aclonicasource",
             "com.android.theme.font.adamgcinora",
