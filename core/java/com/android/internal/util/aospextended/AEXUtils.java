@@ -17,6 +17,7 @@
 package com.android.internal.util.aospextended;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.Intent;
@@ -193,16 +194,48 @@ public class AEXUtils {
             }
         }
 
-        public static void toggleCameraFlash() {
-            IStatusBarService service = getStatusBarService();
-            if (service != null) {
-                try {
-                    service.toggleCameraFlash();
-                } catch (RemoteException e) {
-                    // do nothing.
-                }
+    public static void toggleCameraFlash() {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+                service.toggleCameraFlash();
+            } catch (RemoteException e) {
+                // do nothing.
             }
         }
+    }
+
+    // Clear notifications
+    public static void clearAllNotifications() {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+                service.onClearAllNotifications(ActivityManager.getCurrentUser());
+            } catch (RemoteException e) {
+                // do nothing.
+            }
+        }
+    }
+
+    // Screen off
+    public static void switchScreenOff(Context ctx) {
+        PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+        if (pm!= null && pm.isScreenOn()) {
+            pm.goToSleep(SystemClock.uptimeMillis());
+        }
+    }
+
+    // Screen on
+    public static void switchScreenOn(Context context) {
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (pm == null) return;
+        pm.wakeUp(SystemClock.uptimeMillis(), "com.android.systemui:CAMERA_GESTURE_PREVENT_LOCK");
+    }
+
+    // Volume panel
+    public static void toggleVolumePanel(Context context) {
+        AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
     }
 
     // Check to see if a package is installed
