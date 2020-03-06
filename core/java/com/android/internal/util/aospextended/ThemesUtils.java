@@ -110,4 +110,11 @@ public class ThemesUtils {
     public static final String[] SOLARIZED_DARK = {
             "com.android.system.theme.solarizeddark",
     };
+
+    public static final String[] NAVBAR_STYLES = {
+            "com.android.theme.navbar.asus",
+            "com.android.theme.navbar.oneplus",
+            "com.android.theme.navbar.oneui",
+            "com.android.theme.navbar.tecno",
+    };
 }
