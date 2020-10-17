@@ -1342,7 +1342,7 @@ public final class PowerManagerService extends SystemService
                      Settings.System.AOD_NOTIFICATION_PULSE_ACTIVATED, 0,
                      UserHandle.USER_CURRENT);
         }
-        // depends on OMNI_AOD_NOTIFICATION_PULSE_ACTIVATED - so MUST be afterwards
+        // depends on AOD_NOTIFICATION_PULSE_ACTIVATED - so MUST be afterwards
         // no need to call us again
         mAlwaysOnEnabled = mAmbientDisplayConfiguration.alwaysOnEnabled(UserHandle.USER_CURRENT);
 
@@ -1840,11 +1840,17 @@ public final class PowerManagerService extends SystemService
         }
 
         if (eventTime < mLastWakeTime
-                || getWakefulnessLocked() == WAKEFULNESS_ASLEEP
-                || getWakefulnessLocked() == WAKEFULNESS_DOZING
                 || !mSystemReady
                 || !mBootCompleted) {
             return false;
+        }
+
+        // dont check current state
+        if ((flags & PowerManager.GO_TO_SLEEP_FLAG_FORCE) == 0) {
+            if (getWakefulnessLocked() == WAKEFULNESS_ASLEEP
+                    || getWakefulnessLocked() == WAKEFULNESS_DOZING) {
+                return false;
+            }
         }
 
         Trace.traceBegin(Trace.TRACE_TAG_POWER, "goToSleep");
