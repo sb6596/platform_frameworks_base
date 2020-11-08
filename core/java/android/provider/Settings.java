@@ -5093,6 +5093,13 @@ public final class Settings {
         public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
 
 
+        /** Whether to show ambient or lockscreen if AoD is disabled
+         * and we do a wake gesture like lift to wake or double tap
+         *
+         * @hide
+         */
+        public static final String AMBIENT_WAKE_GESTURES = "ambient_wake_gestures";
+
         /**
          * Which applications to disable heads up notifications for
          *
