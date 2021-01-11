@@ -40,6 +40,8 @@ public class ThemesUtils {
             "com.android.theme.color.cyan", // Cyan
             "com.android.theme.color.deeporange", // Deep Orange
             "com.android.theme.color.deeppurple", // Deep Purple
+            "com.android.theme.color.elegantgreen", // Elegant Green
+            "com.android.theme.color.extendedgreen", // Extended Green
             "com.android.theme.color.grey", // Grey
             "com.android.theme.color.indigo", // Indigo
             "com.android.theme.color.lightblue", // Light Blue
