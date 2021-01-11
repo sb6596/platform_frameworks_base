@@ -109,6 +109,18 @@ public class ThemesUtils {
             "com.android.theme.font.ubuntu",
     };
 
+    public static final String[] BLACK = {
+            "com.android.system.theme.black",
+    };
+
+    public static final String[] EXTENDED = {
+            "com.android.system.theme.extended",
+    };
+
+    public static final String[] ELEGANT = {
+            "com.android.system.theme.elegant",
+    };
+
     public static final String[] SOLARIZED_DARK = {
             "com.android.system.theme.solarizeddark",
     };

@@ -131,6 +131,12 @@ public class ThemeTile extends QSTileImpl<BooleanState> {
                 R.string.system_theme_style_dark, "dark"));
         sStyleItems.add(new ThemeTileItem(UiModeManager.MODE_NIGHT_YES, -1,
                 R.string.system_theme_style_solarizeddark, "solarized_dark"));
+        sStyleItems.add(new ThemeTileItem(UiModeManager.MODE_NIGHT_YES, -1,
+                R.string.system_theme_style_black, "black"));
+        sStyleItems.add(new ThemeTileItem(UiModeManager.MODE_NIGHT_YES, -1,
+                R.string.system_theme_style_extended, "extended"));
+        sStyleItems.add(new ThemeTileItem(UiModeManager.MODE_NIGHT_YES, -1,
+                R.string.system_theme_style_elegant, "elegant"));
     }
 
     private enum Mode {
@@ -313,6 +319,33 @@ public class ThemeTile extends QSTileImpl<BooleanState> {
                     try {
                         mOverlayManager.setEnabled(solarized_dark,
                                 themeItem.uri.equals("solarized_dark"), USER_SYSTEM);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for (int i = 0; i < ThemesUtils.BLACK.length; i++) {
+                    String black = ThemesUtils.BLACK[i];
+                    try {
+                        mOverlayManager.setEnabled(black,
+                                themeItem.uri.equals("black"), USER_SYSTEM);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for (int i = 0; i < ThemesUtils.EXTENDED.length; i++) {
+                    String extended = ThemesUtils.EXTENDED[i];
+                    try {
+                        mOverlayManager.setEnabled(extended,
+                                themeItem.uri.equals("extended"), USER_SYSTEM);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for (int i = 0; i < ThemesUtils.ELEGANT.length; i++) {
+                    String elegant = ThemesUtils.ELEGANT[i];
+                    try {
+                        mOverlayManager.setEnabled(elegant,
+                                themeItem.uri.equals("elegant"), USER_SYSTEM);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
