@@ -5506,18 +5506,6 @@ public final class Settings {
         public static final String POCKET_JUDGE = "pocket_judge";
 
         /**
-         * Force show navigation bar setting.
-         * @hide
-         */
-        public static final String FORCE_SHOW_NAVBAR = "force_show_navbar";
-
-        /**
-         * Whether to show arrow keys in navigation bar
-         * @hide
-         */
-        public static final String NAVIGATION_BAR_ARROW_KEYS = "navigation_bar_menu_arrow_keys";
-
-        /**
          * Settings dashboard icon style
          * @hide
          */

@@ -61,7 +61,6 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
     private boolean mBlockEthernet;
     private boolean mActivityEnabled;
     private boolean mForceBlockWifi;
-    private boolean mBlockVpn;
 
     // Track as little state as possible, and only for padding purposes
     private boolean mIsAirplaneMode = false;
@@ -96,16 +95,12 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
     }
 
     private void updateVpn() {
-        boolean vpnVisible = mSecurityController.isVpnEnabled() && !mBlockVpn;
+        boolean vpnVisible = mSecurityController.isVpnEnabled();
         int vpnIconId = currentVpnIconId(mSecurityController.isVpnBranded());
 
-        if (vpnVisible && vpnIconId > 0) {
-            mIconController.setIcon(mSlotVpn, vpnIconId,
+        mIconController.setIcon(mSlotVpn, vpnIconId,
                 mContext.getResources().getString(R.string.accessibility_vpn_on));
-            mIconController.setIconVisibility(mSlotVpn, true);
-        } else {
-            mIconController.setIconVisibility(mSlotVpn, false);
-        }
+        mIconController.setIconVisibility(mSlotVpn, vpnVisible);
     }
 
     private int currentVpnIconId(boolean isBranded) {
@@ -134,7 +129,6 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         boolean blockMobile = blockList.contains(mSlotMobile);
         boolean blockWifi = blockList.contains(mSlotWifi);
         boolean blockEthernet = blockList.contains(mSlotEthernet);
-        boolean blockVpn = blockList.contains(mSlotVpn);
 
         if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
                 || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi) {
@@ -145,11 +139,6 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
             // Re-register to get new callbacks.
             mNetworkController.removeCallback(this);
             mNetworkController.addCallback(this);
-        }
-        if (blockVpn != mBlockVpn) {
-            mBlockVpn = blockVpn;
-            boolean vpnVisible = mSecurityController.isVpnEnabled() && !mBlockVpn;
-            //apply();
         }
     }
 

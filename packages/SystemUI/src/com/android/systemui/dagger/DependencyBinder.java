@@ -21,8 +21,6 @@ import com.android.systemui.appops.AppOpsController;
 import com.android.systemui.appops.AppOpsControllerImpl;
 import com.android.systemui.classifier.FalsingManagerProxy;
 import com.android.systemui.controls.dagger.ControlsModule;
-import com.android.systemui.CustomSettingsService;
-import com.android.systemui.CustomSettingsServiceImpl;
 import com.android.systemui.globalactions.GlobalActionsComponent;
 import com.android.systemui.globalactions.GlobalActionsImpl;
 import com.android.systemui.plugins.ActivityStarter;
@@ -255,11 +253,6 @@ public abstract class DependencyBinder {
      */
     @Binds
     public abstract FalsingManager provideFalsingManager(FalsingManagerProxy falsingManagerImpl);
-
-    /**
-     */
-    @Binds
-    public abstract CustomSettingsService provideCustomSettingsService(CustomSettingsServiceImpl controllerImpl);
 
     /**
      */
