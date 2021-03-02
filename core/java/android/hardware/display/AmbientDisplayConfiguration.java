@@ -223,6 +223,6 @@ public class AmbientDisplayConfiguration {
     /** {@hide} */
     public boolean isPowerBtnFlashlightEnabled(int user) {
         return Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.TORCH_POWER_BUTTON_GESTURE, 0, user) != 0;
+                Settings.System.TORCH_POWER_BUTTON_GESTURE, 0, user) != 0;
     }
 }

@@ -192,7 +192,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.policy.GestureNavigationSettingsObserver;
 import com.android.internal.policy.ScreenDecorationsUtils;
 import com.android.internal.util.ScreenshotHelper;
-import com.android.internal.util.aosip.ActionUtils;
+import com.android.internal.util.aospextended.AEXUtils;
 import com.android.internal.util.function.TriConsumer;
 import com.android.internal.view.AppearanceRegion;
 import com.android.internal.widget.PointerLocationView;
@@ -647,7 +647,7 @@ public class DisplayPolicy {
 
         if (mDisplayContent.isDefaultDisplay) {
             mHasStatusBar = true;
-            mHasNavigationBar = ActionUtils.deviceSupportNavigationBar(mContext);
+            mHasNavigationBar = AEXUtils.deviceSupportNavigationBar(mContext);
         } else {
             mHasStatusBar = false;
             mHasNavigationBar = mDisplayContent.supportsSystemDecorations();
@@ -746,7 +746,7 @@ public class DisplayPolicy {
      */
     public void updatehasNavigationBar() {
         if (mDisplayContent.isDefaultDisplay) {
-            mHasNavigationBar = ActionUtils.deviceSupportNavigationBar(mContext);
+            mHasNavigationBar = AEXUtils.deviceSupportNavigationBar(mContext);
         }
     }
 
