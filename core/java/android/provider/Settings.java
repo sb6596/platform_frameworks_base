@@ -5805,11 +5805,6 @@ public final class Settings {
         public static final String AOD_NOTIFICATION_PULSE_TIMEOUT = "ambient_notification_light_timeout";
 
          /**
-         * Whether to use accent color for pulse
-         * @hide
-         */
-        public static final String NOTIFICATION_PULSE_ACCENT = "ambient_notification_light_accent";
-         /**
          * Pulse Ambient lights color
          * @hide
          */

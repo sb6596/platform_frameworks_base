@@ -89,7 +89,7 @@ import com.android.systemui.doze.DozeLog;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.fragments.FragmentHostManager.FragmentListener;
 import com.android.systemui.media.MediaHierarchyManager;
-import com.android.systemui.omni.NotificationLightsView;
+import com.android.systemui.aospextended.NotificationLightsView;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.qs.QS;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
