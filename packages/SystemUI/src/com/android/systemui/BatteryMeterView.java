@@ -33,6 +33,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -115,6 +116,10 @@ public class BatteryMeterView extends LinearLayout implements
     private boolean mCharging;
     public int mBatteryStyle = BATTERY_STYLE_PORTRAIT;
     public int mShowBatteryPercent;
+    // Error state where we know nothing about the current battery state
+    private boolean mBatteryStateUnknown;
+    // Lazily-loaded since this is expected to be a rare-if-ever state
+    private Drawable mUnknownStateDrawable;
 
     private DualToneHandler mDualToneHandler;
     private int mUser;
@@ -359,6 +364,11 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     private void updatePercentText() {
+        if (mBatteryStateUnknown) {
+            setContentDescription(getContext().getString(R.string.accessibility_battery_unknown));
+            return;
+        }
+
         if (mBatteryController == null) {
             return;
         }
@@ -415,11 +425,18 @@ public class BatteryMeterView extends LinearLayout implements
                 mShowBatteryPercent == BATTERY_PERCENT_SHOW_INSIDE;
         final boolean drawPercentOnly = mShowPercentMode == MODE_ESTIMATE ||
                 mShowPercentMode == MODE_ON || mShowBatteryPercent == BATTERY_PERCENT_SHOW_OUTSIDE;
+        boolean shouldShow =
+                (mShowPercentAvailable && systemSetting && mShowPercentMode != MODE_OFF)
+                || mShowPercentMode == MODE_ON
+                || mShowPercentMode == MODE_ESTIMATE;
+        shouldShow = shouldShow && !mBatteryStateUnknown;
         if (!(!mIsQsHeader && mBatteryStyle == BATTERY_STYLE_HIDDEN)
                 && drawPercentOnly && (!drawPercentInside || mCharging)) {
             mThemedDrawable.setShowPercent(false);
             mCircleDrawable.setShowPercent(false);
             mFullCircleDrawable.setShowPercent(false);
+
+        if (shouldShow) {
             if (!showing) {
                 mBatteryPercentView = loadPercentView();
                 if (mPercentageStyleId != 0) { // Only set if specified as attribute
@@ -480,6 +497,32 @@ public class BatteryMeterView extends LinearLayout implements
     public void onOverlayChanged() {
         updateShowPercent();
         updateSettings();
+    }
+
+    private Drawable getUnknownStateDrawable() {
+        if (mUnknownStateDrawable == null) {
+            mUnknownStateDrawable = mContext.getDrawable(R.drawable.ic_battery_unknown);
+            mUnknownStateDrawable.setTint(mTextColor);
+        }
+
+        return mUnknownStateDrawable;
+    }
+
+    @Override
+    public void onBatteryUnknownStateChanged(boolean isUnknown) {
+        if (mBatteryStateUnknown == isUnknown) {
+            return;
+        }
+
+        mBatteryStateUnknown = isUnknown;
+
+        if (mBatteryStateUnknown) {
+            mBatteryIconView.setImageDrawable(getUnknownStateDrawable());
+        } else {
+            mBatteryIconView.setImageDrawable(mDrawable);
+        }
+
+        updateShowPercent();
     }
 
     /**
@@ -548,6 +591,10 @@ public class BatteryMeterView extends LinearLayout implements
         if (mBatteryPercentView != null) {
             mBatteryPercentView.setTextColor(singleToneColor);
         }
+
+        if (mUnknownStateDrawable != null) {
+            mUnknownStateDrawable.setTint(singleToneColor);
+        }
     }
 
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
@@ -557,6 +604,7 @@ public class BatteryMeterView extends LinearLayout implements
         pw.println("    mThemedDrawable.getPowerSave: " + powerSave);
         pw.println("    mBatteryPercentView.getText(): " + percent);
         pw.println("    mTextColor: #" + Integer.toHexString(mTextColor));
+        pw.println("    mBatteryStateUnknown: " + mBatteryStateUnknown);
         pw.println("    mLevel: " + mLevel);
     }
 
