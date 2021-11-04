@@ -26,6 +26,13 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationTallOverlay \
 	DisplayCutoutEmulationWaterfallOverlay \
 	FontNotoSerifSourceOverlay \
+	IconShapePebbleOverlay \
+	IconShapeRoundedRectOverlay \
+	IconShapeSquircleOverlay \
+	IconShapeTaperedRectOverlay \
+	IconShapeTeardropOverlay \
+	IconShapeVesselOverlay \
+        IconShapeRoundedHexagonOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarMode2ButtonOverlay \
 	NavigationBarModeGesturalOverlay \
