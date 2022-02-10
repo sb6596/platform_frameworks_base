@@ -123,6 +123,7 @@ android_library {
         "lottie",
         "backgesture-google",
         "smartspace-google",
+        "faceunlock_framework",
     ],
     manifest: "AndroidManifest.xml",
 
